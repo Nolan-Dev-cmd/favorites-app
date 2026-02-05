@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestionnaire de favoris</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #01fa0e;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background: #eee;
+      margin: 5px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 4px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    .delete {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>⭐ Gestionnaire de favoris ⭐</h1>
+
+<div class="container">
+  <input type="text" id="name" placeholder="Nom du site">
+  <input type="url" id="url" placeholder="URL du site">
+  <button onclick="addFavorite()">Ajouter</button>
+  <ul id="favoritesList"></ul>
+</div>
+<script>
+  let favorites = [];
+
+  function addFavorite() {
+    const name = document.getElementById('name').value;
+    const url = document.getElementById('url').value;
+
+    if (name && url) {
+      favorites.push({ name, url });
+      document.getElementById('name').value = '';
+      document.getElementById('url').value = '';
+      renderFavorites();
+    } else {
+      alert('Veuillez remplir les deux champs.');
+    }
+  }
+
+  function deleteFavorite(index) {
+    favorites.splice(index, 1);
+    renderFavorites();
+  }
+
+  function renderFavorites() {
+    const list = document.getElementById('favoritesList');
+    list.innerHTML = '';
+    favorites.forEach((fav, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${fav.url}" target="_blank">${fav.name}</a>
+              <button class="delete" onclick="deleteFavorite(${index})">Supprimer</button>`;
+      list.appendChild(li);
+    });
+  }
+  </script>
+</body>
+</html>
